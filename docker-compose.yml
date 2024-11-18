@@ -1,25 +1,16 @@
-version: "3.8"
 services:
-  mongo:
-    image: mongo:4.4
-    container_name: mongo-db
-    ports:
-      - "27017:27017"
-    networks:
-      - fiware
-
-  orion:
-    image: fiware/orion:latest
-    container_name: fiware-orion
-    depends_on:
-      - mongo
-    ports:
-      - "1026:1026"
-    networks:
-      - fiware
-    command: -dbhost mongo
+   orion:
+     image: telefonicaiot/fiware-orion
+     ports:
+       - "1026:1026"
+     depends_on:
+       - mongo
+     command: -dbURI mongodb://mongo
+ 
+   mongo:
+     image: mongo:6.0
+     command: --nojournal
 
 networks:
   fiware:
-    driver: bridge
-
+    driver: bridge    
